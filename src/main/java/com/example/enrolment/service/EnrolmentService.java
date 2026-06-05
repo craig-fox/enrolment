@@ -9,7 +9,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.client.RestClient;
 
 import java.util.List;
 import java.util.Map;
@@ -19,16 +19,16 @@ import java.util.Map;
 public class EnrolmentService {
 
     private final EnrolmentRepository enrolmentRepository;
-    private final WebClient openAiWebClient;
+    private final RestClient openAiRestClient;
     private final String openAiModel;
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     public EnrolmentService(
             EnrolmentRepository enrolmentRepository,
-            WebClient openAiWebClient,
+            RestClient openAiRestClient,
             @Value("${openai.model}") String openAiModel) {
         this.enrolmentRepository = enrolmentRepository;
-        this.openAiWebClient = openAiWebClient;
+        this.openAiRestClient = openAiRestClient;
         this.openAiModel = openAiModel;
     }
 
@@ -75,12 +75,11 @@ public class EnrolmentService {
     
         );
     
-        JsonNode response = openAiWebClient.post()
+        JsonNode response = openAiRestClient.post()
                 .uri("/v1/chat/completions")
-                .bodyValue(requestBody)
+                .body(requestBody)
                 .retrieve()
-                .bodyToMono(JsonNode.class)
-                .block();
+                .body(JsonNode.class);
     
         if (response == null) {
             throw new IllegalStateException("Empty response from OpenAI");
