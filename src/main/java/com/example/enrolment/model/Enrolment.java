@@ -38,7 +38,7 @@ public class Enrolment {
     @GeneratedValue
     private Long id;
 
-    private int enrolmentYaar;
+    private int enrolmentYear;
 
     private String faculty;
 
@@ -52,12 +52,12 @@ public class Enrolment {
         this.studentcount = studentcount;
     }
 
-    public int getEnrolmentYaar() {
-        return enrolmentYaar;
+    public int getEnrolmentYear() {
+        return enrolmentYear;
     }
 
-    public void setEnrolmentYaar(int enrolmentYaar) {
-        this.enrolmentYaar = enrolmentYaar;
+    public void setEnrolmentYear(int enrolmentYear) {
+        this.enrolmentYear = enrolmentYear;
     }
 
     private int studentcount;
