@@ -1,6 +1,8 @@
 package com.example.enrolment.service;
 
 import com.example.enrolment.dto.QueryIntent;
+import com.example.enrolment.model.Enrolment;
+import com.example.enrolment.repository.EnrolmentRepository;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -16,15 +18,22 @@ import java.util.Map;
 @Slf4j
 public class EnrolmentService {
 
+    private final EnrolmentRepository enrolmentRepository;
     private final WebClient openAiWebClient;
     private final String openAiModel;
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     public EnrolmentService(
+            EnrolmentRepository enrolmentRepository,
             WebClient openAiWebClient,
             @Value("${openai.model}") String openAiModel) {
+        this.enrolmentRepository = enrolmentRepository;
         this.openAiWebClient = openAiWebClient;
         this.openAiModel = openAiModel;
+    }
+
+    public List<Enrolment> getAll() {
+        return enrolmentRepository.findAll();
     }
 
     public QueryIntent processQuestion(String question) {
