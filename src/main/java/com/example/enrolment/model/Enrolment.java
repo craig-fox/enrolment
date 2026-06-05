@@ -9,6 +9,18 @@ import jakarta.persistence.Table;
 @Table(name = "enrolment")
 public class Enrolment {
 
+    @Id
+    @GeneratedValue
+    private Long id;
+
+    private int enrolmentYear;
+
+    private String faculty;
+
+    private String programme;
+
+    private int studentCount;
+
     public Long getId() {
         return id;
     }
@@ -17,6 +29,13 @@ public class Enrolment {
         this.id = id;
     }
 
+    public int getEnrolmentYear() {
+        return enrolmentYear;
+    }
+
+    public void setEnrolmentYear(int enrolmentYear) {
+        this.enrolmentYear = enrolmentYear;
+    }
 
     public String getFaculty() {
         return faculty;
@@ -34,31 +53,11 @@ public class Enrolment {
         this.programme = programme;
     }
 
-    @Id
-    @GeneratedValue
-    private Long id;
-
-    private int enrolmentYear;
-
-    private String faculty;
-
-    private String programme;
-
-    public int getStudentcount() {
-        return studentcount;
+    public int getStudentCount() {
+        return studentCount;
     }
 
-    public void setStudentcount(int studentcount) {
-        this.studentcount = studentcount;
+    public void setStudentCount(int studentCount) {
+        this.studentCount = studentCount;
     }
-
-    public int getEnrolmentYear() {
-        return enrolmentYear;
-    }
-
-    public void setEnrolmentYear(int enrolmentYear) {
-        this.enrolmentYear = enrolmentYear;
-    }
-
-    private int studentcount;
 }

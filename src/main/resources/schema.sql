@@ -1,7 +1,7 @@
 CREATE TABLE enrolment (
        id BIGINT PRIMARY KEY,
-       enrolmentYear INT,
+       enrolment_year INT,
        programme VARCHAR(255),
        faculty VARCHAR(255),
-       studentcount INT
+       student_count INT
 );
