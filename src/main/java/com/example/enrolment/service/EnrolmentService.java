@@ -1,13 +1,15 @@
 package com.example.enrolment.service;
 
 import com.example.enrolment.dto.QueryIntent;
+import com.example.enrolment.model.Enrolment;
+import com.example.enrolment.repository.EnrolmentRepository;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.client.RestClient;
 
 import java.util.List;
 import java.util.Map;
@@ -16,15 +18,22 @@ import java.util.Map;
 @Slf4j
 public class EnrolmentService {
 
-    private final WebClient openAiWebClient;
+    private final EnrolmentRepository enrolmentRepository;
+    private final RestClient openAiRestClient;
     private final String openAiModel;
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     public EnrolmentService(
-            WebClient openAiWebClient,
+            EnrolmentRepository enrolmentRepository,
+            RestClient openAiRestClient,
             @Value("${openai.model}") String openAiModel) {
-        this.openAiWebClient = openAiWebClient;
+        this.enrolmentRepository = enrolmentRepository;
+        this.openAiRestClient = openAiRestClient;
         this.openAiModel = openAiModel;
+    }
+
+    public List<Enrolment> getAll() {
+        return enrolmentRepository.findAll();
     }
 
     public QueryIntent processQuestion(String question) {
@@ -66,12 +75,11 @@ public class EnrolmentService {
     
         );
     
-        JsonNode response = openAiWebClient.post()
+        JsonNode response = openAiRestClient.post()
                 .uri("/v1/chat/completions")
-                .bodyValue(requestBody)
+                .body(requestBody)
                 .retrieve()
-                .bodyToMono(JsonNode.class)
-                .block();
+                .body(JsonNode.class);
     
         if (response == null) {
             throw new IllegalStateException("Empty response from OpenAI");
