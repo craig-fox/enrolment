@@ -16,4 +16,10 @@ public interface EnrolmentRepository extends JpaRepository<Enrolment, Long> {
                OR CAST(e.enrolmentYear AS string) LIKE CONCAT('%', :queryText, '%')
             """)
     List<Enrolment> findByQueryText(@Param("queryText") String queryText);
+
+    List<Enrolment> findByFaculty(String faculty);
+
+    List<Enrolment> findByProgramme(String programme);
+
+    List<Enrolment> findByEnrolmentYear(int enrolmentYear);
 }
