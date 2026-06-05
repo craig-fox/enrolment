@@ -2,13 +2,17 @@ package com.example.enrolment.dto;
 
 public class QueryRequest {
 
-    private final String queryText;
+    private String question;
 
-    public QueryRequest(String queryText) {
-        this.queryText = queryText;
+    public String getQuestion() {
+
+        return question;
+
     }
 
-    public String getQueryText() {
-        return queryText;
+    public void setQuestion(String question) {
+
+        this.question = question;
+
     }
 }
