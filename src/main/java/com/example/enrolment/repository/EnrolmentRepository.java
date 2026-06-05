@@ -13,7 +13,7 @@ public interface EnrolmentRepository extends JpaRepository<Enrolment, Long> {
             SELECT e FROM Enrolment e
             WHERE LOWER(e.faculty) LIKE LOWER(CONCAT('%', :queryText, '%'))
                OR LOWER(e.programme) LIKE LOWER(CONCAT('%', :queryText, '%'))
-               OR CAST(e.enrolmentYaar AS string) LIKE CONCAT('%', :queryText, '%')
+               OR CAST(e.enrolmentYear AS string) LIKE CONCAT('%', :queryText, '%')
             """)
     List<Enrolment> findByQueryText(@Param("queryText") String queryText);
 }
