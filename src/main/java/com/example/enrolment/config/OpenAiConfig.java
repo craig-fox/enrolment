@@ -14,6 +14,8 @@ public class OpenAiConfig {
     RestClient openAiRestClient(
             @Value("${openai.api-key}") String apiKey,
             @Value("${openai.base-url:https://api.openai.com}") String baseUrl) {
+
+        System.out.println("API KEY = " + apiKey);    
         return RestClient.builder()
                 .baseUrl(baseUrl)
                 .defaultHeader(HttpHeaders.AUTHORIZATION, "Bearer " + apiKey)
